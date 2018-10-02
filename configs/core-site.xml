@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+<!-- needed params -->
+<property> <name>fs.default.name</name>         <value>hdfs://localhost:9000</value> </property>
+<property> <name>hadoop.tmp.dir</name>          <value>/hadoop/parnell/tmp</value> </property>
+
+<!-- Tuning -->
+<property> <name>io.file.buffer.size</name>     <value>65536</value> </property>
+
+</configuration>
+
+
+<!-- tuning reasons 
+io.file.buffer.size:4096: this is one of the more “magic” parameters. You can set this to 65536 and leave it there. (I’ve profiled this in a bunch of scenarios; this seems to be the sweet spot.) http://blog.cloudera.com/blog/2009/03/configuration-parameters-what-can-you-just-ignore/
+--> 

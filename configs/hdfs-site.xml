@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+
+<configuration>
+<!-- needed params -->
+<property> <name>dfs.namenode.data.dir</name>              <value>file:/hadoop/parnell/name</value> </property>
+<property> <name>dfs.datanode.data.dir</name>              <value>file:/hadoop/parnell/data</value></property>
+<property> <name>dfs.replication</name>                    <value>1</value> </property>
+
+<!-- hdfs tuning -->
+<property> <name>dfs.blocksize</name>                      <value>256m</value> </property>
+<property> <name>dfs.datanode.max.transfer.threads</name>  <value>4096</value> </property>
+<property> <name>dfs.namenode.handler.count</name>         <value>20</value> </property>
+<property> <name>dfs.datanode.handler.count</name>         <value>6</value> </property>
+
+</configuration>
+
+<!-- tuning reasons 
+dfs.blocksize: 64m: how large are the blocksizes, I'm having transfer and file issues, so lets increase this
+
+dfs.datanode.max.transfer.threads: 4096: Specifies the maximum number of threads to use for transferring data in and out of the DN. I read a message board where people were able to solve their SuffleError: FileNotFoundException errors by increasing this value.  
+
+
+dfs.namenode.handler.count: 10: The number of server threads for the namenode.If the NameNode and JobTracker are on big hardware, set dfs.namenode.handler.count to 64 and same with mapred.job.tracker.handler.count. If you’ve got more than 64 GB of RAM in this machine, you can double it again. http://blog.cloudera.com/blog/2009/03/configuration-parameters-what-can-you-just-ignore/
+
+dfs.datanode.handler.count: 3: defaults to 3 and could be set a bit higher. (Maybe 8 or 10.) More than this takes up memory that could be devoted to running MapReduce tasks, and I don’t know that it gives you any more performance. (An increased number of HDFS clients implies an increased number of DataNodes to handle the load.)
+-->
+

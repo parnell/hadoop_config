@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+<!-- needed params -->
+<property> <name>mapreduce.framework.name</name>                <value>yarn</value></property>
+<property> <name>yarn.app.mapreduce.am.staging-dir</name>       <value>/hadoop/parnell/ystaging</value></property>
+<property> <name>mapreduce.job.counters.limit</name>            <value>1000</value></property>
+
+<property> <name>mapreduce.task.io.sort.factor</name>           <value>20</value></property>
+<property> <name>mapreduce.task.io.sort.mb</name>               <value>250</value></property>
+
+<!-- Tracker Tuning-->
+<property> <name>mapreduce.jobtracker.handler.count</name>      <value>20</value></property>
+
+<!-- Java Options Tuning -->
+<property> <name>mapred.child.java.opts</name>                  <value>-Xmx768m -Djava.library.path=/home/01208/parnell/local/lib</value></property>
+
+</configuration>
+
+<!-- tuning reasons 
+mapreduce.map.output.compress:false: compress intermediate output (this seems to be VERY important, look at lzo possibly)
+mapreduce.task.io.sort.factor:10 : The number of input streams (files) to be merged at once in the map/reduce tasks should be set to a sufficiently large value (for example, 100) to minimize disk accesses
+
+mapreduce.task.io.sort.mb:100:  The total size of result and metadata buffers associated with a map task. This should be at least 10*mapreduce.task.io.sort.factor.  mapreduce.task.io.sort.factor*mapreduce.task.io.sort.mb* mapreduce.job.maps is the amount of RAM is actually needed to be allocated
+
+mapreduce.jobtracker.handler.count: 10: If the NameNode and JobTracker are on big hardware, set dfs.namenode.handler.count to 64 and same with mapred.job.tracker.handler.count. If you’ve got more than 64 GB of RAM in this machine, you can double it again. http://blog.cloudera.com/blog/2009/03/configuration-parameters-what-can-you-just-ignore/
+
+mapred.child.java.opts: -Xmx256m: running out of heap space
+-->
